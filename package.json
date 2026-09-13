@@ -1,0 +1,18 @@
+{
+  "name": "w-house",
+  "version": "1.0.0",
+  "description": "W-HOUSE 餐饮菜单发布与住客反馈系统",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.3.0",
+    "cookie-parser": "^1.4.7",
+    "express": "^4.21.1"
+  }
+}

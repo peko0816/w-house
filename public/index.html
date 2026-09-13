@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>W-HOUSE</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="每周餐单发布与住客反馈系统">
+<meta name="theme-color" content="#B65423">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/styles.css">
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='4' fill='%23B65423'/><text x='50%25' y='56%25' text-anchor='middle' dominant-baseline='middle' font-family='Georgia,serif' font-size='19' fill='%23FAF6ED' font-weight='600'>W</text></svg>">
+</head>
+<body>
+
+<div class="app">
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark">W</span>
+      <div class="brand-text">
+        <div class="brand-title">W-HOUSE</div>
+        <div class="brand-sub">Weekly Menu · Feedback</div>
+      </div>
+    </div>
+    <div class="week-nav">
+      <button class="nav-btn" id="prev-week" aria-label="上一周">‹</button>
+      <div class="week-label">
+        <div class="week-title" id="week-title">—</div>
+        <div class="week-dates" id="week-dates">—</div>
+      </div>
+      <button class="nav-btn" id="next-week" aria-label="下一周">›</button>
+    </div>
+    <div class="user-chip">
+      <span class="admin-badge" id="admin-badge" hidden>管理员</span>
+      <button class="chip" id="admin-login-btn" title="管理员登录">管理员</button>
+      <button class="chip" id="nickname-btn" title="修改昵称">
+        <span class="chip-dot"></span>
+        <span id="nickname-display">住客</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="admin-toolbar" id="admin-toolbar" hidden>
+    <button class="admin-btn primary" id="btn-new-menu">＋ 新一周菜单</button>
+    <button class="admin-btn" id="btn-edit-menu">✎ 编辑本周</button>
+    <button class="admin-btn" id="btn-console">◈ 反馈管理</button>
+    <button class="admin-btn" id="btn-delete-menu">✕ 删除本周</button>
+    <span class="spacer"></span>
+    <button class="admin-btn ghost" id="btn-logout">退出管理</button>
+  </div>
+
+  <div class="week-metadata" id="week-metadata" hidden>
+    <span id="wm-published">—</span>
+    <span class="separator">·</span>
+    <span id="wm-dishcount">—</span>
+    <span class="separator">·</span>
+    <span id="wm-reviewcount">—</span>
+  </div>
+
+  <div class="day-tabs" id="day-tabs"></div>
+
+  <main class="menu-grid" id="menu-grid">
+    <div class="loading">正在加载餐单…</div>
+  </main>
+</div>
+
+<div class="fab" id="fab" hidden>
+  <button class="fab-btn" id="fab-btn">
+    我的反馈 <span class="fab-count" id="fab-count">0</span>
+  </button>
+</div>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<aside class="sheet" id="dish-sheet" hidden aria-label="菜品详情">
+  <button class="sheet-close" aria-label="关闭">×</button>
+  <div id="dish-sheet-body"></div>
+</aside>
+
+<aside class="sheet wide" id="editor-sheet" hidden aria-label="编辑菜单">
+  <button class="sheet-close" aria-label="关闭">×</button>
+  <div id="editor-body"></div>
+</aside>
+
+<aside class="sheet wide" id="console-sheet" hidden aria-label="反馈管理">
+  <button class="sheet-close" aria-label="关闭">×</button>
+  <div id="console-body"></div>
+</aside>
+
+<aside class="sheet" id="my-feedback-sheet" hidden aria-label="我的反馈">
+  <button class="sheet-close" aria-label="关闭">×</button>
+  <div id="my-feedback-body"></div>
+</aside>
+
+<div class="toast" id="toast" hidden role="status" aria-live="polite"></div>
+
+<div class="modal" id="nickname-modal" hidden>
+  <div class="modal-card">
+    <h2>请输入昵称</h2>
+    <p class="modal-desc">用于在评价旁显示您的身份，可随时更改。</p>
+    <input type="text" id="nickname-input" placeholder="例如：小张" maxlength="16" autocomplete="off">
+    <button class="btn" id="nickname-save">保存</button>
+  </div>
+</div>
+
+<div class="modal" id="login-modal" hidden>
+  <div class="modal-card">
+    <h2>管理员登录</h2>
+    <p class="modal-desc">请输入物业管理员密码。登录后可发布菜单、管理反馈。</p>
+    <input type="password" id="login-input" placeholder="密码" autocomplete="current-password">
+    <button class="btn" id="login-submit">登录</button>
+  </div>
+</div>
+
+<script src="/app.js"></script>
+</body>
+</html>
