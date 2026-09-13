@@ -1,8 +1,10 @@
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env') });
+
 const express = require('express');
 const Database = require('better-sqlite3');
 const cookieParser = require('cookie-parser');
 const crypto = require('crypto');
-const path = require('path');
 
 const PORT = Number(process.env.PORT || 3000);
 const HOST = process.env.HOST || '0.0.0.0';
