@@ -44,6 +44,8 @@ const state = {
   replies: {},
   activeDishId: null,
   mobileActiveDay: 0,
+  mobileDayAutoSet: false,
+  breakfastCollapsed: false,
   consoleTab: 'all',
   pollTimer: null,
   openReplyFor: null,
@@ -240,6 +242,7 @@ async function init() {
   try {
     await fetchMenus();
     await fetchReviewsAndReplies();
+    defaultMobileDayToToday();
   } catch (e) {
     console.error('init fetch failed', e);
     toast('加载失败，请检查网络', 'error');
@@ -247,6 +250,38 @@ async function init() {
   renderAll();
   updateFabVisibility();
   startPolling();
+}
+
+function defaultMobileDayToToday() {
+  if (state.mobileDayAutoSet || !state.activeMenu) return;
+  const start = parseDate(state.activeMenu.week_start);
+  const todayStr = isoDate(new Date());
+  for (let d = 0; d < 7; d++) {
+    if (isoDate(daysAdd(start, d)) === todayStr) {
+      state.mobileActiveDay = d;
+      break;
+    }
+  }
+  state.mobileDayAutoSet = true;
+}
+
+function scrollActiveDayIntoView() {
+  const tabs = document.getElementById('day-tabs');
+  if (!tabs || getComputedStyle(tabs).display === 'none') return;
+  const chip = tabs.children[state.mobileActiveDay];
+  if (!chip) return;
+  const containerW = tabs.clientWidth;
+  const chipLeft = chip.offsetLeft;
+  const chipW = chip.offsetWidth;
+  let target;
+  if (state.mobileActiveDay <= 1) {
+    target = 0;
+  } else if (state.mobileActiveDay >= 5) {
+    target = tabs.scrollWidth - containerW;
+  } else {
+    target = chipLeft - (containerW - chipW) / 2;
+  }
+  tabs.scrollTo({ left: Math.max(0, target), behavior: 'smooth' });
 }
 
 function updateAdminUI() {
@@ -378,7 +413,12 @@ function renderMenuGrid() {
     const active = d === state.mobileActiveDay;
     tabs.appendChild(el('button', {
       class: 'day-tab' + (active ? ' active' : '') + (isTodayFlag ? ' today' : ''),
-      onclick: () => { state.mobileActiveDay = d; renderMenuGrid(); }
+      onclick: () => {
+        state.mobileActiveDay = d;
+        state.mobileDayAutoSet = true;
+        state.breakfastCollapsed = true;
+        renderMenuGrid();
+      }
     }, [
       DAY_NAMES[d],
       el('span', { class: 'dt-date' }, `${date.getMonth()+1}/${date.getDate()}`)
@@ -393,10 +433,22 @@ function renderMenuGrid() {
   grid.innerHTML = '';
 
   // ---------- Breakfast (shared, 3-column categorized panel) ----------
-  const bfSection = el('section', { class: 'meal-section breakfast' });
-  bfSection.appendChild(el('div', { class: 'meal-title-row' }, [
+  const bfSection = el('section', {
+    class: 'meal-section breakfast' + (state.breakfastCollapsed ? ' collapsed' : '')
+  });
+  bfSection.appendChild(el('div', {
+    class: 'meal-title-row',
+    role: 'button',
+    tabindex: '0',
+    'aria-expanded': state.breakfastCollapsed ? 'false' : 'true',
+    onclick: () => {
+      state.breakfastCollapsed = !state.breakfastCollapsed;
+      renderMenuGrid();
+    }
+  }, [
     el('h2', { class: 'meal-title' }, '早餐'),
-    el('span', { class: 'meal-title-note' }, '全周共用')
+    el('span', { class: 'meal-title-note' }, '全周共用'),
+    el('span', { class: 'collapse-chevron', 'aria-hidden': 'true' }, '›')
   ]));
 
   const bfByCat = {};
@@ -454,6 +506,9 @@ function renderMenuGrid() {
     weekGrid.appendChild(col);
   }
   grid.appendChild(weekGrid);
+
+  // Ensure the active day chip is visible on mobile
+  requestAnimationFrame(scrollActiveDayIntoView);
 }
 
 // ============ Dish sheet ============
