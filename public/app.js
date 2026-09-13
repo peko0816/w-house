@@ -448,7 +448,11 @@ function renderMenuGrid() {
   }, [
     el('h2', { class: 'meal-title' }, '早餐'),
     el('span', { class: 'meal-title-note' }, '全周共用'),
-    el('span', { class: 'collapse-chevron', 'aria-hidden': 'true' }, '›')
+    el('span', {
+      class: 'collapse-chevron',
+      'aria-hidden': 'true',
+      html: '<svg viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M5 7l5 6 5-6" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+    })
   ]));
 
   const bfByCat = {};
@@ -579,6 +583,12 @@ function renderDishSheet() {
   }
 
   body.innerHTML = '';
+  body.appendChild(el('button', {
+    class: 'dish-back-btn',
+    'aria-label': '返回',
+    onclick: closeAllSheets,
+    html: '<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="dish-back-label">返回</span>'
+  }));
   body.appendChild(el('div', { class: 'dish-detail-head' }, [
     el('div', { class: 'dish-detail-eyebrow' }, eyebrowText),
     el('h2', { class: 'dish-detail-name' }, dish.name),
