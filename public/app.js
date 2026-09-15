@@ -377,13 +377,19 @@ function renderDishItem(dish) {
   if (stats.feedbackCount > 0) {
     meta.appendChild(el('span', { class: 'review-count-badge' }, stats.feedbackCount + ' 条'));
   }
-  return el('div', {
-    class: 'dish',
+  const attrs = {
+    class: 'dish' + (dish.description ? ' has-desc' : ''),
     onclick: () => openDishSheet(dish.id)
-  }, [
+  };
+  if (dish.description) attrs.title = dish.description;
+  const wrap = el('div', attrs, [
     el('span', { class: 'dish-name' }, dish.name),
     meta
   ]);
+  if (dish.description) {
+    wrap.appendChild(el('span', { class: 'dish-desc-tip', 'aria-hidden': 'true' }, dish.description));
+  }
+  return wrap;
 }
 
 function renderMenuGrid() {

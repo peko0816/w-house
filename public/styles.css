@@ -484,6 +484,49 @@ a:hover { text-decoration: underline; }
   font-style: italic;
   letter-spacing: 0.03em;
 }
+
+/* Description tooltip on hover (desktop only) */
+.dish { position: relative; }
+.dish-desc-tip {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 6px);
+  background: var(--ink);
+  color: var(--bg);
+  padding: 7px 10px;
+  border-radius: 3px;
+  font-size: 12px;
+  line-height: 1.5;
+  min-width: 120px;
+  max-width: 260px;
+  z-index: 30;
+  pointer-events: none;
+  box-shadow: 0 4px 12px rgba(34,30,23,.18);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: opacity .14s ease, transform .14s ease, visibility 0s linear .14s;
+  white-space: normal;
+  word-break: break-word;
+  letter-spacing: 0.01em;
+}
+.dish-desc-tip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 14px;
+  border: 5px solid transparent;
+  border-top-color: var(--ink);
+}
+.dish.has-desc:hover .dish-desc-tip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity .14s ease, transform .14s ease, visibility 0s;
+}
+@media (max-width: 900px), (hover: none) {
+  .dish-desc-tip { display: none; }
+}
 .stat-sub {
   font-family: var(--font-num);
   font-size: 11px;
