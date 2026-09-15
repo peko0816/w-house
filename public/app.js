@@ -381,7 +381,6 @@ function renderDishItem(dish) {
     class: 'dish' + (dish.description ? ' has-desc' : ''),
     onclick: () => openDishSheet(dish.id)
   };
-  if (dish.description) attrs.title = dish.description;
   const wrap = el('div', attrs, [
     el('span', { class: 'dish-name' }, dish.name),
     meta
