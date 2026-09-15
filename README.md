@@ -78,9 +78,11 @@ npm start
 - **重启后所有管理员被登出** → 设置固定 `SESSION_SECRET`（生成方式见 `.env.example`）
 - **想恢复示例数据** → 停服务、删除 `data.sqlite`、重启（`SEED_ON_EMPTY=1`）
 
-## 变更记录
+## 文档
 
-见 [CHANGELOG.md](CHANGELOG.md)。
+- [ADMIN-GUIDE.md](ADMIN-GUIDE.md) — 管理员日常操作手册（发菜单、回复反馈、AI 起草、常见问题）
+- [DEPLOY-ALIYUN.md](DEPLOY-ALIYUN.md) — 阿里云 ECS 从零到公网可访问的完整部署教程
+- [CHANGELOG.md](CHANGELOG.md) — 变更记录
 
 ## 许可
 
