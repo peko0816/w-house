@@ -125,10 +125,10 @@ a:hover { text-decoration: underline; }
 }
 .brand-title-cn {
   font-family: inherit;
-  font-weight: inherit;
-  font-size: 0.82em;
+  font-weight: 600;
+  font-size: 0.95em;
   color: var(--ink-2);
-  margin-left: 4px;
+  margin-left: 6px;
   letter-spacing: 0.02em;
 }
 .brand-text .brand-sub {
@@ -496,10 +496,9 @@ a:hover { text-decoration: underline; }
 /* Description tooltip on hover (desktop only) */
 .dish { position: relative; }
 .dish-desc-tip {
-  display: none;
   position: absolute;
   left: 0;
-  bottom: calc(100% + 4px);
+  bottom: calc(100% + 6px);
   background: var(--surface-2);
   color: var(--ink);
   border: 1px solid var(--line-strong);
@@ -515,10 +514,34 @@ a:hover { text-decoration: underline; }
   white-space: normal;
   word-break: break-word;
   letter-spacing: 0.01em;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(4px);
+  transition: opacity .14s ease, transform .14s ease, visibility 0s linear .14s;
 }
-.dish.has-desc:hover .dish-desc-tip { display: block; }
+.dish-desc-tip::before,
+.dish-desc-tip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 14px;
+  border: 6px solid transparent;
+}
+.dish-desc-tip::before { border-top-color: var(--line-strong); }
+.dish-desc-tip::after {
+  border-top-color: var(--surface-2);
+  border-width: 5px;
+  left: 15px;
+  top: calc(100% - 1px);
+}
+.dish.has-desc:hover .dish-desc-tip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity .14s ease, transform .14s ease, visibility 0s;
+}
 @media (max-width: 900px), (hover: none) {
-  .dish-desc-tip { display: none !important; }
+  .dish-desc-tip { display: none; }
 }
 .stat-sub {
   font-family: var(--font-num);
