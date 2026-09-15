@@ -124,11 +124,10 @@ a:hover { text-decoration: underline; }
   line-height: 1.1;
 }
 .brand-text .brand-sub {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--ink-3);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  font-family: var(--font-num);
+  letter-spacing: 0.08em;
+  font-family: var(--font-sans);
   margin-top: 3px;
 }
 
