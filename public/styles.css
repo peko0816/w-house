@@ -123,11 +123,20 @@ a:hover { text-decoration: underline; }
   letter-spacing: 0.02em;
   line-height: 1.1;
 }
+.brand-title-cn {
+  font-family: inherit;
+  font-weight: inherit;
+  font-size: 0.82em;
+  color: var(--ink-2);
+  margin-left: 4px;
+  letter-spacing: 0.02em;
+}
 .brand-text .brand-sub {
-  font-size: 12px;
+  font-size: 11px;
   color: var(--ink-3);
-  letter-spacing: 0.08em;
-  font-family: var(--font-sans);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-family: var(--font-num);
   margin-top: 3px;
 }
 
@@ -487,12 +496,14 @@ a:hover { text-decoration: underline; }
 /* Description tooltip on hover (desktop only) */
 .dish { position: relative; }
 .dish-desc-tip {
+  display: none;
   position: absolute;
   left: 0;
-  bottom: calc(100% + 6px);
-  background: var(--ink);
-  color: var(--bg);
-  padding: 7px 10px;
+  bottom: calc(100% + 4px);
+  background: var(--surface-2);
+  color: var(--ink);
+  border: 1px solid var(--line-strong);
+  padding: 6px 10px;
   border-radius: 3px;
   font-size: 12px;
   line-height: 1.5;
@@ -500,31 +511,14 @@ a:hover { text-decoration: underline; }
   max-width: 260px;
   z-index: 30;
   pointer-events: none;
-  box-shadow: 0 4px 12px rgba(34,30,23,.18);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(4px);
-  transition: opacity .14s ease, transform .14s ease, visibility 0s linear .14s;
+  box-shadow: 0 2px 8px rgba(34,30,23,.08);
   white-space: normal;
   word-break: break-word;
   letter-spacing: 0.01em;
 }
-.dish-desc-tip::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 14px;
-  border: 5px solid transparent;
-  border-top-color: var(--ink);
-}
-.dish.has-desc:hover .dish-desc-tip {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-  transition: opacity .14s ease, transform .14s ease, visibility 0s;
-}
+.dish.has-desc:hover .dish-desc-tip { display: block; }
 @media (max-width: 900px), (hover: none) {
-  .dish-desc-tip { display: none; }
+  .dish-desc-tip { display: none !important; }
 }
 .stat-sub {
   font-family: var(--font-num);
